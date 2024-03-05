@@ -7,9 +7,14 @@
     "plugins": ["prettier-plugin-solidity"],
     "overrides": [
         {
-            "files": "*.html",
+            "files": "*.sol",
             "options": {
-                "tabWidth": 2
+                "printWidth": 80,
+                "tabWidth": 4,
+                "useTabs": true,
+                "singleQuote": false,
+                "bracketSpacing": true,
+                "explicitTypes": "always"
             }
         }
     ]
