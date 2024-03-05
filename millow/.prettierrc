@@ -3,6 +3,14 @@
     "useTabs": false,
     "semi": true,
     "trailingComma": "all",
-    "printWidth": 100,
-    "plugins": ["prettier-plugin-solidity"]
+    "printWidth": 80,
+    "plugins": ["prettier-plugin-solidity"],
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
