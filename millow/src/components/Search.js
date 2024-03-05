@@ -9,6 +9,6 @@ const Search = () => {
             />
         </header>
     );
-}
+};
 
 export default Search;

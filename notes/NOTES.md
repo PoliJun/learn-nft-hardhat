@@ -1,6 +1,6 @@
 # Learn NFTs with Hardhat
 
-## IPFS
+## IPFS ERC-721
 
 ### Here's an example of some JSON metadata for an NFT:
 
@@ -12,4 +12,12 @@
 }
 ```
 
-![alt](./img/vlcsnap-2024-03-05-18h31m50s046.png)
+![Intro](./img/vlcsnap-2024-03-05-18h31m50s046.png)
+
+## Hardhat
+
+## OpenZeppelin
+
+## `using` keyword
+## MINT Function
+![alt](/notes/img/vlcsnap-2024-03-05-19h02m05s731.png)
