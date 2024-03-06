@@ -3,13 +3,13 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const { it, describe } = require("mocha");
 
-const tokens = (n) => {
-    return ethers.utils.parseUnits(n.toString(), "ether");
-};
+// const tokens = (n) => {
+//     return ethers.utils.parseUnits(n.toString(), "ether");
+// };
 
 describe("Escrow", () => {
     let realEstate, escrow;
-    let buyer, seller, inspector, lender;
+    let /* buyer, */ seller, inspector, lender;
 
     it("Returns NFT address", async () => {});
 
@@ -21,16 +21,18 @@ describe("Escrow", () => {
 
     it("saves the address", async () => {
         // Setup accounts
-        [buyer, seller, inspector, lender] = await ethers.getSigners();
+        [/* buyer */ seller, inspector, lender] = await ethers.getSigners();
 
         // Deploy Real Estate Contract
         const RealEstate = await ethers.getContractFactory("RealEstate");
         realEstate = await RealEstate.deploy();
-        console.log(realEstate.address);
+        console.log("realEstate.address: " + realEstate.address);
         // Mint
         let transaction = await realEstate
             .connect(seller)
-            .mint("../metadata/1.json");
+            .mint(
+                "https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS",
+            );
         await transaction.wait();
         const Escrow = await ethers.getContractFactory("Escrow");
         escrow = await Escrow.deploy(

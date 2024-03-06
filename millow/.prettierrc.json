@@ -1,0 +1,21 @@
+{
+  "tabWidth": 4,
+  "useTabs": false,
+  "semi": true,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "plugins": ["prettier-plugin-solidity"],
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": "*.sol",
+      "options": {}
+    },
+    {
+      "files": ["*.{json,html,jsx,tsx}"],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}
