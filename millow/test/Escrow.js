@@ -45,9 +45,13 @@ describe("Escrow", () => {
         await transaction.wait();
 
         // List property
-        transaction = await escrow
-            .connect(seller)
-            .list(1, buyer.address, tokens(10), tokens(5));
+        transaction = await escrow.connect(seller).list(
+            1,
+            buyer.address,
+
+            tokens(10),
+            tokens(5),
+        );
         await transaction.wait();
     });
     describe("Deployment", () => {
@@ -92,15 +96,51 @@ describe("Escrow", () => {
             });
         });
 
-        describe('Deposit', async () => {
-            it('Updates contract balance', async () => {
-                const transaction= await escrow.connect(buyer).depositEarnest(1, {value: tokens(5)});
+        describe("Deposit", async () => {
+            it("Updates contract balance", async () => {
+                const transaction = await escrow.connect(buyer).depositEarnest(
+                    1,
+
+                    { value: tokens(5) },
+                );
                 await transaction.wait();
+
                 const result = await escrow.getBalance();
                 expect(result).to.equal(tokens(5));
             });
-            
         });
 
+        describe("Inspection", async () => {
+            it("Updates inspection status", async () => {
+                const transaction = await escrow
+                    .connect(inspector)
+                    .updateInspectionStatus(1, true);
+                await transaction.wait();
+                const result = await escrow.inspectionPassed(1);
+                expect(result).to.equal(true);
+            });
+        });
+
+        describe("Approval", async () => {
+            it("Updates Approval status", async () => {
+                let transaction = await escrow
+                    .connect(buyer)
+                    .approvePurchase(1);
+                await transaction.wait();
+
+                transaction = await escrow.connect(seller).approvePurchase(1);
+                await transaction.wait();
+
+                transaction = await escrow.connect(lender).approvePurchase(1);
+                await transaction.wait();
+
+                const resultBuyer = await escrow.approval(1, buyer.address);
+                const resultSeller = await escrow.approval(1, seller.address);
+                const resultLender = await escrow.approval(1, lender.address);
+                expect(resultBuyer).to.equal(true);
+                expect(resultSeller).to.equal(true);
+                expect(resultLender).to.equal(true);
+            });
+        });
     });
 });
