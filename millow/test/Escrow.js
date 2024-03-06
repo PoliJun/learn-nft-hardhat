@@ -91,5 +91,16 @@ describe("Escrow", () => {
                 expect(await realEstate.ownerOf(1)).to.equal(escrow.address);
             });
         });
+
+        describe('Deposit', async () => {
+            it('Updates contract balance', async () => {
+                const transaction= await escrow.connect(buyer).depositEarnest(1, {value: tokens(5)});
+                await transaction.wait();
+                const result = await escrow.getBalance();
+                expect(result).to.equal(tokens(5));
+            });
+            
+        });
+
     });
 });

@@ -1,5 +1,9 @@
 # Real Estate NFT DApp
 
+## Node version
+
+18
+
 ## Technology Stack & Tools
 
 -   Solidity (Writing Smart Contracts & Tests)
