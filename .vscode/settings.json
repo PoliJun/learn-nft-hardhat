@@ -1,6 +1,7 @@
 {
     "solidity.defaultCompiler": "localNodeModule",
     "solidity.packageDefaultDependenciesDirectory": "node_modules",
+    "editor.detectIndentation": true
     // "solidity.packageDefaultDependenciesContractsDirectory": [
     //   "src",
     //   "contracts",

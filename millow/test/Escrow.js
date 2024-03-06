@@ -122,7 +122,7 @@ describe("Escrow", () => {
         });
 
         describe("Approval", async () => {
-            it("Updates Approval status", async () => {
+            beforeEach(async () => {
                 let transaction = await escrow
                     .connect(buyer)
                     .approvePurchase(1);
@@ -133,7 +133,8 @@ describe("Escrow", () => {
 
                 transaction = await escrow.connect(lender).approvePurchase(1);
                 await transaction.wait();
-
+            });
+            it("Updates Approval status", async () => {
                 const resultBuyer = await escrow.approval(1, buyer.address);
                 const resultSeller = await escrow.approval(1, seller.address);
                 const resultLender = await escrow.approval(1, lender.address);
@@ -141,6 +142,41 @@ describe("Escrow", () => {
                 expect(resultSeller).to.equal(true);
                 expect(resultLender).to.equal(true);
             });
+        });
+
+        describe("Finalize Sale", async () => {
+            beforeEach(async () => {
+                // Deposit Earnest
+                let transaction = await escrow
+                    .connect(buyer)
+                    .depositEarnest(1, { value: tokens(5) });
+                await transaction.wait();
+
+                // Inspection
+                transaction = await escrow
+                    .connect(inspector)
+                    .updateInspectionStatus(1, true);
+                await transaction.wait();
+
+                // Approve
+                transaction = await escrow.connect(buyer).approvePurchase(1);
+                await transaction.wait();
+
+                transaction = await escrow.connect(seller).approvePurchase(1);
+                await transaction.wait();
+
+                transaction = await escrow.connect(lender).approvePurchase(1);
+                await transaction.wait();
+
+                await lender.sendTransaction({
+                    to: escrow.address,
+                    value: tokens(5),
+                });
+
+                transaction = await escrow.connect(seller).finalizeSale(1);
+                // await transaction.wait();
+            });
+            it("works", async () => {});
         });
     });
 });

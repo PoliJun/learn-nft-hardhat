@@ -81,7 +81,7 @@ contract Escrow {
         inspectionPassed[_nftID] = _status;
     }
 
-    function approvePurchase(uint256 _nftID) public onlyBuyer(_nftID) {
+    function approvePurchase(uint256 _nftID) public {
         approval[_nftID][msg.sender] = true;
     }
 
@@ -91,4 +91,24 @@ contract Escrow {
         return address(this).balance;
     }
 
+    /*   
+    * Finlaize Sale
+      TODO: Require inspection status(add more Items here like appraisal)
+      TODO: Require sale to be authorized, buyer, seller, lender
+      todo:require funds to be correct amount
+      todo: transfer nft to buyer
+      todo: transfer funds to seller 
+      */
+    function finalizeSale(uint256 _nftID) public view {
+        require(inspectionPassed[_nftID], "Inspection not passed");
+        require(approval[_nftID][buyer[_nftID]], "Buyer has not approved");
+        require(approval[_nftID][seller], "Seller has not approved");
+        require(approval[_nftID][lender], "Lender has not approved");
+        require(
+            address(this).balance >= price[_nftID],
+            "Not enough funds to finalize sale"
+        );
+        // IERC721(nftAddress).transferFrom(address(this), buyer[_nftID], _nftID);
+        // seller.transfer(price[_nftID]);
+    }
 }
