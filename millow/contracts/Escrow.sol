@@ -81,25 +81,19 @@ contract Escrow {
         inspectionPassed[_nftID] = _status;
     }
 
-    function approvePurchase(uint256 _nftID) public {
+    function approveSale(uint256 _nftID) public {
         approval[_nftID][msg.sender] = true;
     }
 
-    receive() external payable {}
-
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
-
     /*   
-    * Finlaize Sale
+      * Finlaize Sale
       TODO: Require inspection status(add more Items here like appraisal)
       TODO: Require sale to be authorized, buyer, seller, lender
       todo:require funds to be correct amount
       todo: transfer nft to buyer
       todo: transfer funds to seller 
       */
-    function finalizeSale(uint256 _nftID) public view {
+    function finalizeSale(uint256 _nftID) public {
         require(inspectionPassed[_nftID], "Inspection not passed");
         require(approval[_nftID][buyer[_nftID]], "Buyer has not approved");
         require(approval[_nftID][seller], "Seller has not approved");
@@ -108,7 +102,27 @@ contract Escrow {
             address(this).balance >= price[_nftID],
             "Not enough funds to finalize sale"
         );
-        // IERC721(nftAddress).transferFrom(address(this), buyer[_nftID], _nftID);
-        // seller.transfer(price[_nftID]);
+
+        (bool success, ) = seller.call{ value: address(this).balance }("");
+        require(success, "Transfer failed.");
+
+        // transfer nft to buyer
+        IERC721(nftAddress).transferFrom(address(this), buyer[_nftID], _nftID);
+    }
+
+    // Cancel Sale(handle earnest deposit)
+    // todo: if inspection has not passed, then refund, otherwise send to seller
+    function cancelSale(uint256 _nftID) public {
+        if (!inspectionPassed[_nftID]) {
+            payable(buyer[_nftID]).transfer(address(this).balance);
+        } else {
+            seller.transfer(address(this).balance);
+        }
+    }
+
+    receive() external payable {}
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
     }
 }

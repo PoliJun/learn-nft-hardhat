@@ -17,7 +17,6 @@ describe("Escrow", () => {
         // Deploy Real Estate Contract
         const RealEstate = await ethers.getContractFactory("RealEstate");
         realEstate = await RealEstate.deploy();
-        console.log("realEstate.address: " + realEstate.address);
         // Mint
         let transaction = await realEstate
             .connect(seller)
@@ -32,27 +31,18 @@ describe("Escrow", () => {
             inspector.address,
             lender.address,
         );
-        console.log("escrow.address: " + escrow.address);
-        console.log(
-            "msg.sender: " + (await ethers.provider.getSigner().getAddress()),
-        );
-        console.log("owner of: " + (await realEstate.ownerOf(1)));
 
         // Approve property
         transaction = await realEstate
             .connect(seller)
             .approve(escrow.address, 1);
         await transaction.wait();
-
         // List property
-        transaction = await escrow.connect(seller).list(
-            1,
-            buyer.address,
-
-            tokens(10),
-            tokens(5),
-        );
+        transaction = await escrow
+            .connect(seller)
+            .list(1, buyer.address, tokens(10), tokens(5));
         await transaction.wait();
+        console.log(await ethers.provider.getSigner().getAddress());
     });
     describe("Deployment", () => {
         it("Returns NFT address", async () => {
@@ -123,15 +113,13 @@ describe("Escrow", () => {
 
         describe("Approval", async () => {
             beforeEach(async () => {
-                let transaction = await escrow
-                    .connect(buyer)
-                    .approvePurchase(1);
+                let transaction = await escrow.connect(buyer).approveSale(1);
                 await transaction.wait();
 
-                transaction = await escrow.connect(seller).approvePurchase(1);
+                transaction = await escrow.connect(seller).approveSale(1);
                 await transaction.wait();
 
-                transaction = await escrow.connect(lender).approvePurchase(1);
+                transaction = await escrow.connect(lender).approveSale(1);
                 await transaction.wait();
             });
             it("Updates Approval status", async () => {
@@ -146,26 +134,23 @@ describe("Escrow", () => {
 
         describe("Finalize Sale", async () => {
             beforeEach(async () => {
-                // Deposit Earnest
                 let transaction = await escrow
                     .connect(buyer)
                     .depositEarnest(1, { value: tokens(5) });
                 await transaction.wait();
 
-                // Inspection
                 transaction = await escrow
                     .connect(inspector)
                     .updateInspectionStatus(1, true);
                 await transaction.wait();
 
-                // Approve
-                transaction = await escrow.connect(buyer).approvePurchase(1);
+                transaction = await escrow.connect(buyer).approveSale(1);
                 await transaction.wait();
 
-                transaction = await escrow.connect(seller).approvePurchase(1);
+                transaction = await escrow.connect(seller).approveSale(1);
                 await transaction.wait();
 
-                transaction = await escrow.connect(lender).approvePurchase(1);
+                transaction = await escrow.connect(lender).approveSale(1);
                 await transaction.wait();
 
                 await lender.sendTransaction({
@@ -174,9 +159,14 @@ describe("Escrow", () => {
                 });
 
                 transaction = await escrow.connect(seller).finalizeSale(1);
-                // await transaction.wait();
+                await transaction.wait();
             });
-            it("works", async () => {});
+            it("Updates Ownership", async () => {
+                expect(await realEstate.ownerOf(1)).to.equal(buyer.address);
+            });
+            it("Update Balance", async () => {
+                expect(await escrow.getBalance()).to.equal(0);
+            });
         });
     });
 });
