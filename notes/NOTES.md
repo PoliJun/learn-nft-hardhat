@@ -6,9 +6,9 @@
 
 ```json
 {
-  "name": "No time to explain!",
-  "description": "I said there was no time to explain, and I stand by that.",
-  "image": "ipfs://bafybeict2kq6gt4ikgulypt7h7nwj4hmfi2kevrqvnx2osibfulyy5x3hu/no-time-to-explain.jpeg"
+    "name": "No time to explain!",
+    "description": "I said there was no time to explain, and I stand by that.",
+    "image": "ipfs://bafybeict2kq6gt4ikgulypt7h7nwj4hmfi2kevrqvnx2osibfulyy5x3hu/no-time-to-explain.jpeg"
 }
 ```
 
@@ -19,5 +19,15 @@
 ## OpenZeppelin
 
 ## `using` keyword
+
 ## MINT Function
+
 ![alt](/notes/img/vlcsnap-2024-03-05-19h02m05s731.png)
+
+## Frontend
+
+### ethereum provider
+
+```javascript
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+```
