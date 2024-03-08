@@ -265,7 +265,7 @@
         "type": "uint256"
       }
     ],
-    "name": "purchasePrice",
+    "name": "price",
     "outputs": [
       {
         "internalType": "uint256",
@@ -298,7 +298,7 @@
       },
       {
         "internalType": "bool",
-        "name": "_passed",
+        "name": "_status",
         "type": "bool"
       }
     ],

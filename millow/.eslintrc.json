@@ -8,7 +8,7 @@
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "commonjs"
+    "sourceType": "module"
   },
   "plugins": ["react"],
   "rules": {}
