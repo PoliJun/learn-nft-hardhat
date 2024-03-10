@@ -61,6 +61,10 @@ function App() {
   useEffect(() => {
     loadBlockchainData();
   }, []);
+
+  const toggleEscrow = async (home) => {
+    console.log(home);
+  }
   return (
     <div>
       <Navigation

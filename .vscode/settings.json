@@ -1,7 +1,8 @@
 {
     "solidity.defaultCompiler": "localNodeModule",
     "solidity.packageDefaultDependenciesDirectory": "node_modules",
-    "editor.detectIndentation": true
+    "editor.detectIndentation": true,
+    "vsicons.presets.nestjs": true
     // "solidity.packageDefaultDependenciesContractsDirectory": [
     //   "src",
     //   "contracts",
