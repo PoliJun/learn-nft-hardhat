@@ -7,7 +7,7 @@
   "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
   "overrides": [
     {
-      "files": ["src/**/*.js"],
+      "files": ["src/**/*.{js,jsx,ts,tsx}"],
       "parserOptions": {
         "sourceType": "module"
       }
