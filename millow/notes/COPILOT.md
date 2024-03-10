@@ -6,14 +6,14 @@ Problem code:
 
 ```solidity
 // Cancel Sale(handle earnest deposit)
-    // todo: if inspection has not passed, then refund, otherwise send to seller
-    function cancelSale(uint256 _nftID) public {
-        if (!inspectionPassed[_nftID]) {
-            payable(buyer[_nftID]).transfer(address(this).balance);
-        } else {
-            seller.transfer(address(this).balance);
-        }
+// todo: if inspection has not passed, then refund, otherwise send to seller
+function cancelSale(uint256 _nftID) public {
+    if (!inspectionPassed[_nftID]) {
+        payable(buyer[_nftID]).transfer(address(this).balance);
+    } else {
+        seller.transfer(address(this).balance);
     }
+}
 ```
 
 The `cancelSale` function in your code indeed transfers the entire balance of the contract to either the buyer or the seller, depending on whether the inspection has passed.

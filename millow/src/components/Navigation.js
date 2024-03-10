@@ -25,18 +25,12 @@ const Navigation = ({ account, setAccount }) => {
             </ul>
 
             <div className="nav__brand">
-                <img
-                    src={logo}
-                    alt="Logo"
-                />
+                <img src={logo} alt="Logo" />
                 <h1>Millow</h1>
             </div>
 
             {account ? (
-                <button
-                    type="button"
-                    className="nav__connect"
-                >
+                <button type="button" className="nav__connect">
                     {account.slice(0, 6) + "..." + account.slice(38, 42)}
                 </button>
             ) : (
