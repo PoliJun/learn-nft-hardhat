@@ -97,9 +97,9 @@ function App() {
       {toggle && (
         <Home
           home={home}
-          // provider={provider}
-          // account={account}
-          // escrow={escrow}
+          provider={provider}
+          account={account}
+          escrow={escrow}
           togglePop={togglePop}
         />
       )}
