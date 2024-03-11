@@ -6,6 +6,7 @@
   "printWidth": 80,
   "plugins": ["prettier-plugin-solidity"],
   "bracketSpacing": true,
+  "bracketSameLine": true,
   "overrides": [
     {
       "files": "*.sol",
