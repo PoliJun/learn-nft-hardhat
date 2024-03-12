@@ -7,10 +7,10 @@ interface IERC721 {
 }
 
 contract Escrow {
-    address public lender;
-    address public inspector;
-    address payable public seller;
     address public nftAddress;
+    address payable public seller;
+    address public inspector;
+    address public lender;
 
     modifier onlySeller() {
         require(msg.sender == seller, "Only seller can call this function");
@@ -28,7 +28,7 @@ contract Escrow {
     }
 
     mapping(uint256 => bool) public isListed;
-    mapping(uint256 => uint256) public price;
+    mapping(uint256 => uint256) public purchasePrice;
     mapping(uint256 => uint256) public escrowAmount;
     mapping(uint256 => address) public buyer;
     mapping(uint256 => bool) public inspectionPassed;
@@ -51,7 +51,7 @@ contract Escrow {
     ) public payable onlySeller {
         IERC721(nftAddress).transferFrom(msg.sender, address(this), _nftID);
         isListed[_nftID] = true;
-        price[_nftID] = _purchasePrice;
+        purchasePrice[_nftID] = _purchasePrice;
         escrowAmount[_nftID] = _escrowAmount;
         buyer[_nftID] = _buyer;
     }
@@ -81,7 +81,7 @@ contract Escrow {
         require(approval[_nftID][buyer[_nftID]], "Buyer has not approved");
         require(approval[_nftID][seller], "Seller has not approved");
         require(approval[_nftID][lender], "Lender has not approved");
-        require(address(this).balance >= price[_nftID], "Not enough funds to finalize sale");
+        require(address(this).balance >= purchasePrice[_nftID], "Not enough funds to finalize sale");
 
         (bool success, ) = seller.call{ value: address(this).balance }("");
         require(success, "Transfer failed.");

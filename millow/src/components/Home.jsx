@@ -90,7 +90,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     await transaction.wait();
 
     // Lender sends funds to contract...
-    const lendAmount = (await escrow.purchasePrice(home.id)) - (await escrow.escrowAmount(home.id));
+    const lendAmount = (await escrow.price(home.id)) - (await escrow.escrowAmount(home.id));
     await signer.sendTransaction({
       to: escrow.address,
       value: lendAmount.toString(),
