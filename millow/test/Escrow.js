@@ -20,9 +20,7 @@ describe("Escrow", () => {
         // Mint
         let transaction = await realEstate
             .connect(seller)
-            .mint(
-                "https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS",
-            );
+            .mint("https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS");
         await transaction.wait();
         const Escrow = await ethers.getContractFactory("Escrow");
         escrow = await Escrow.deploy(
@@ -33,14 +31,10 @@ describe("Escrow", () => {
         );
 
         // Approve property
-        transaction = await realEstate
-            .connect(seller)
-            .approve(escrow.address, 1);
+        transaction = await realEstate.connect(seller).approve(escrow.address, 1);
         await transaction.wait();
         // List property
-        transaction = await escrow
-            .connect(seller)
-            .list(1, buyer.address, tokens(10), tokens(5));
+        transaction = await escrow.connect(seller).list(1, buyer.address, tokens(10), tokens(5));
         await transaction.wait();
         console.log(await ethers.provider.getSigner().getAddress());
     });
@@ -102,9 +96,7 @@ describe("Escrow", () => {
 
         describe("Inspection", async () => {
             it("Updates inspection status", async () => {
-                const transaction = await escrow
-                    .connect(inspector)
-                    .updateInspectionStatus(1, true);
+                const transaction = await escrow.connect(inspector).updateInspectionStatus(1, true);
                 await transaction.wait();
                 const result = await escrow.inspectionPassed(1);
                 expect(result).to.equal(true);
@@ -139,9 +131,7 @@ describe("Escrow", () => {
                     .depositEarnest(1, { value: tokens(5) });
                 await transaction.wait();
 
-                transaction = await escrow
-                    .connect(inspector)
-                    .updateInspectionStatus(1, true);
+                transaction = await escrow.connect(inspector).updateInspectionStatus(1, true);
                 await transaction.wait();
 
                 transaction = await escrow.connect(buyer).approveSale(1);

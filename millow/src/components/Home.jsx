@@ -62,9 +62,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     const signer = await provider.getSigner();
 
     // Buyer deposit earnest
-    let transaction = await escrow
-      .connect(signer)
-      .depositEarnest(home.id, { value: escrowAmount });
+    let transaction = await escrow.connect(signer).depositEarnest(home.id, { value: escrowAmount });
     await transaction.wait();
 
     // Buyer approves...
@@ -78,9 +76,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     const signer = await provider.getSigner();
 
     // Inspector updates status
-    const transaction = await escrow
-      .connect(signer)
-      .updateInspectionStatus(home.id, true);
+    const transaction = await escrow.connect(signer).updateInspectionStatus(home.id, true);
     await transaction.wait();
 
     setHasInspected(true);
@@ -94,9 +90,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     await transaction.wait();
 
     // Lender sends funds to contract...
-    const lendAmount =
-      (await escrow.purchasePrice(home.id)) -
-      (await escrow.escrowAmount(home.id));
+    const lendAmount = (await escrow.purchasePrice(home.id)) - (await escrow.escrowAmount(home.id));
     await signer.sendTransaction({
       to: escrow.address,
       value: lendAmount.toString(),
@@ -149,35 +143,19 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
           ) : (
             <div>
               {account === inspector ? (
-                <button
-                  className="home__buy"
-                  onClick={inspectHandler}
-                  disabled={hasInspected}
-                >
+                <button className="home__buy" onClick={inspectHandler} disabled={hasInspected}>
                   Approve Inspection
                 </button>
               ) : account === lender ? (
-                <button
-                  className="home__buy"
-                  onClick={lendHandler}
-                  disabled={hasLended}
-                >
+                <button className="home__buy" onClick={lendHandler} disabled={hasLended}>
                   Approve & Lend
                 </button>
               ) : account === seller ? (
-                <button
-                  className="home__buy"
-                  onClick={sellHandler}
-                  disabled={hasSold}
-                >
+                <button className="home__buy" onClick={sellHandler} disabled={hasSold}>
                   Approve & Sell
                 </button>
               ) : (
-                <button
-                  className="home__buy"
-                  onClick={buyHandler}
-                  disabled={hasBought}
-                >
+                <button className="home__buy" onClick={buyHandler} disabled={hasBought}>
                   Buy
                 </button>
               )}

@@ -27793,9 +27793,7 @@
             "contractKind": "contract",
             "fullyImplemented": true,
             "id": 64,
-            "linearizedBaseContracts": [
-              64, 1190, 931, 1217, 1047, 1858, 1870, 1534
-            ],
+            "linearizedBaseContracts": [64, 1190, 931, 1217, 1047, 1858, 1870, 1534],
             "name": "RealEstate",
             "nameLocation": "538:10:0",
             "nodeType": "ContractDefinition",
@@ -38946,9 +38944,7 @@
                                                 "id": 891,
                                                 "name": "revert",
                                                 "nodeType": "Identifier",
-                                                "overloadedDeclarations": [
-                                                  4294967277, 4294967277
-                                                ],
+                                                "overloadedDeclarations": [4294967277, 4294967277],
                                                 "referencedDeclaration": 4294967277,
                                                 "src": "12826:6:1",
                                                 "typeDescriptions": {
@@ -41245,9 +41241,7 @@
             },
             "fullyImplemented": false,
             "id": 1190,
-            "linearizedBaseContracts": [
-              1190, 931, 1217, 1047, 1858, 1870, 1534
-            ],
+            "linearizedBaseContracts": [1190, 931, 1217, 1047, 1858, 1870, 1534],
             "name": "ERC721URIStorage",
             "nameLocation": "266:16:4",
             "nodeType": "ContractDefinition",
@@ -46588,9 +46582,7 @@
                                       "id": 1502,
                                       "name": "revert",
                                       "nodeType": "Identifier",
-                                      "overloadedDeclarations": [
-                                        4294967277, 4294967277
-                                      ],
+                                      "overloadedDeclarations": [4294967277, 4294967277],
                                       "referencedDeclaration": 4294967277,
                                       "src": "8252:6:6",
                                       "typeDescriptions": {

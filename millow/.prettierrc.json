@@ -3,7 +3,7 @@
   "useTabs": false,
   "semi": true,
   "trailingComma": "all",
-  "printWidth": 80,
+  "printWidth": 100,
   "plugins": ["prettier-plugin-solidity"],
   "bracketSpacing": true,
   "bracketSameLine": true,

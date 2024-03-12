@@ -463,9 +463,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 64,
-        "linearizedBaseContracts": [
-          64, 1190, 931, 1217, 1047, 1858, 1870, 1534
-        ],
+        "linearizedBaseContracts": [64, 1190, 931, 1217, 1047, 1858, 1870, 1534],
         "name": "RealEstate",
         "nameLocation": "538:10:0",
         "nodeType": "ContractDefinition",

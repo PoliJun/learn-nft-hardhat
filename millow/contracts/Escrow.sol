@@ -18,18 +18,12 @@ contract Escrow {
     }
 
     modifier onlyBuyer(uint256 _nftID) {
-        require(
-            msg.sender == buyer[_nftID],
-            "Only buyer can call this function"
-        );
+        require(msg.sender == buyer[_nftID], "Only buyer can call this function");
         _;
     }
 
     modifier onlyInspector() {
-        require(
-            msg.sender == inspector,
-            "Only inspector can call this function"
-        );
+        require(msg.sender == inspector, "Only inspector can call this function");
         _;
     }
 
@@ -40,12 +34,7 @@ contract Escrow {
     mapping(uint256 => bool) public inspectionPassed;
     mapping(uint256 => mapping(address => bool)) public approval;
 
-    constructor(
-        address _nftAddress,
-        address payable _seller,
-        address _inspector,
-        address _lender
-    ) {
+    constructor(address _nftAddress, address payable _seller, address _inspector, address _lender) {
         nftAddress = _nftAddress;
         seller = _seller;
         inspector = _inspector;
@@ -68,16 +57,10 @@ contract Escrow {
     }
 
     function depositEarnest(uint256 _nftID) public payable onlyBuyer(_nftID) {
-        require(
-            msg.value >= escrowAmount[_nftID],
-            "Deposit amount is not correct"
-        );
+        require(msg.value >= escrowAmount[_nftID], "Deposit amount is not correct");
     }
 
-    function updateInspectionStatus(
-        uint256 _nftID,
-        bool _status
-    ) public onlyInspector {
+    function updateInspectionStatus(uint256 _nftID, bool _status) public onlyInspector {
         inspectionPassed[_nftID] = _status;
     }
 
@@ -98,10 +81,7 @@ contract Escrow {
         require(approval[_nftID][buyer[_nftID]], "Buyer has not approved");
         require(approval[_nftID][seller], "Seller has not approved");
         require(approval[_nftID][lender], "Lender has not approved");
-        require(
-            address(this).balance >= price[_nftID],
-            "Not enough funds to finalize sale"
-        );
+        require(address(this).balance >= price[_nftID], "Not enough funds to finalize sale");
 
         (bool success, ) = seller.call{ value: address(this).balance }("");
         require(success, "Transfer failed.");

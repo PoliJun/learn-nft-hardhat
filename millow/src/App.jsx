@@ -44,19 +44,15 @@ function App() {
     }
     setHomes(homes);
     console.log(homes);
-    const escrow = new ethers.Contract(
-      config[network.chainId].Escrow.address,
-      Escrow,
-      provider,
-    );
+    const escrow = new ethers.Contract(config[network.chainId].Escrow.address, Escrow, provider);
     setEscrow(escrow);
 
     // * listen for account change
-    window.ethereum.on('accountsChanged', async () => {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const account = ethers.utils.getAddress(accounts[0])
+    window.ethereum.on("accountsChanged", async () => {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const account = ethers.utils.getAddress(accounts[0]);
       setAccount(account);
-    })
+    });
   };
   useEffect(() => {
     loadBlockchainData();
